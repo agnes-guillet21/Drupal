@@ -19,3 +19,7 @@ nightwatch.settings.json
 
 # Ignore dotenv
 .env
+
+
+
+web/sites/default/settings.local.php
