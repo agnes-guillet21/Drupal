@@ -1,0 +1,7 @@
+cp_news:
+  path: '/news'
+  defaults:
+    _controller: '\Drupal\cp_news\Controller\NewsController::content'
+    _title: 'Hello Actu'
+  requirements:
+    _permission: 'access content'
