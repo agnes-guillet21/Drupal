@@ -6,7 +6,7 @@
 ////
 ////
 //////hook preprocess
-//function cp_actualite_preprocess_node(&$variables) {
+//function cp_news_preprocess_node(&$variables) {
 //
 //
 //  /** @var \Drupal\node\NodeInterface $node */
