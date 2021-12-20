@@ -1,0 +1,21 @@
+uuid: 1e2e2aef-9b3f-4ea6-b396-71be1c777e75
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_body
+    - node.type.blog_post
+  module:
+    - text
+id: node.blog_post.field_body
+field_name: field_body
+entity_type: node
+bundle: blog_post
+label: Body
+description: 'texte à renseigner '
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

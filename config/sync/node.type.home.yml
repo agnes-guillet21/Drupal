@@ -1,0 +1,17 @@
+uuid: ad90830b-cb42-422b-9c3e-31ab6b30645b
+langcode: fr
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: 'Page d''accueil'
+type: home
+description: ''
+help: ''
+new_revision: false
+preview_mode: 0
+display_submitted: false

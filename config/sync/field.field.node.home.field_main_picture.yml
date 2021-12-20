@@ -1,0 +1,29 @@
+uuid: 4bb10fab-33a2-417a-87bb-bacb68a2160e
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_main_picture
+    - media.type.image
+    - node.type.home
+id: node.home.field_main_picture
+field_name: field_main_picture
+entity_type: node
+bundle: home
+label: 'Image principale'
+description: 'image qui s affichera tout en haut de la page d ''accueil'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

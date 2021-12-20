@@ -1,0 +1,5 @@
+name: Coding Pool - Actualités
+description: Module qui gere l'affichage des actualités.
+type: module
+core_version_requirement: ^9
+

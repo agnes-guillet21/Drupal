@@ -1,0 +1,19 @@
+uuid: ce86ade2-792b-4183-bdb8-e2a8ef6dd066
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_intro
+    - node.type.blog_post
+id: node.blog_post.field_intro
+field_name: field_intro
+entity_type: node
+bundle: blog_post
+label: Intro
+description: 'intro a renseigner a chaque fois'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

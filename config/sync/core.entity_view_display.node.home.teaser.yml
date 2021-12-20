@@ -1,0 +1,27 @@
+uuid: bcf1fff7-5e09-408c-93f4-8f0af855b3e3
+langcode: fr
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.home.field_intro
+    - field.field.node.home.field_main_picture
+    - field.field.node.home.field_related_articles
+    - node.type.home
+  module:
+    - user
+id: node.home.teaser
+targetEntityType: node
+bundle: home
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_intro: true
+  field_main_picture: true
+  field_related_articles: true
+  langcode: true

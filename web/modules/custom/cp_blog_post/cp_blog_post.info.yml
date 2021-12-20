@@ -1,0 +1,6 @@
+name: Coding Pool - Billets de blog
+description: Module qui gere l'affichage du blog et les differents besoins du blog.
+type: module
+core_version_requirement: ^9
+
+

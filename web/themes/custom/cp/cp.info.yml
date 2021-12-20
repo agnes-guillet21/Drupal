@@ -1,0 +1,17 @@
+name: Coding Pool theme
+type: theme
+description: 'A fluffy theme for a exercice'
+core_version_requirement: ^8 || ^9
+libraries:
+  - cp/main
+base theme: stable9
+
+ckeditor_stylesheets:
+  - css/ckeditor.css
+
+regions:
+  header: 'Header'
+  breadcrumb: 'Breadcrumb'
+  facet: 'Facet'
+  content: 'Content'
+  footer: 'Footer'

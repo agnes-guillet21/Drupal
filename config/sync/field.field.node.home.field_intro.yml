@@ -1,0 +1,19 @@
+uuid: 97031af0-cbea-462d-89c3-010e5faca276
+langcode: fr
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_intro
+    - node.type.home
+id: node.home.field_intro
+field_name: field_intro
+entity_type: node
+bundle: home
+label: Intro
+description: 'texte qui s affichera sur la page d accueil qui presentera le site'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

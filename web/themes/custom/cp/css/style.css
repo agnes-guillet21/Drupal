@@ -1,0 +1,77 @@
+/*****************************************
+          Generaux
+*************************************/
+
+body
+{
+  background-color:lightgrey;
+}
+img
+{
+  max-width: 100%;
+}
+
+a{
+  text-decoration: none;
+  color:black;
+}
+li
+{
+  list-style-type: none;
+}
+ul
+{
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+
+}
+/*****************************************
+      menu principal
+******************************************/
+
+.menu
+{
+  /* Transformation en flexbox */
+  display: flex;
+  background-color: white;
+  width: 100%;
+
+}
+/*enfant du 2 li opacite 0*/
+
+.ul li:nth-child(2)
+{
+  opacity: 0;
+}
+.ul li:nth-child(2):hover .ul li:nth-child(2) /*cible */
+{
+  opacity:1;
+}
+
+
+/*ul:hover*/
+/*{*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*}*/
+
+
+
+/*****************************************
+      Blog Post
+******************************************/
+.container
+{
+  /*centrer*/
+  width: 85%;
+  margin: auto;
+
+}
+
+.container-flex
+{
+  display:flex;
+  flex-wrap: wrap;
+  align-items:start;
+}

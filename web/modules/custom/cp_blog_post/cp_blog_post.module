@@ -1,0 +1,176 @@
+<?php
+
+/*
+ * passage variable en argument de variables.
+ * &$variables => fait reference ca va modifier la valeur la ou on utilise
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\NodeInterface;
+function cp_blog_post_preprocess_node(&$variables) {
+  /** @var \Drupal\node\NodeInterface $node */
+  $node = $variables['node'];
+//  dpm($variables);
+  # test le type de notre node (type de contenu)
+  if($node->bundle() == 'blog_post' && $variables['view_mode'] == "full") {
+
+//        $variables['content']['my_html'] = [
+//          '#markup' =>  '<p>'.$variables['bouh'].'</p>'
+//        ];
+//
+
+      $entityTypeManager = Drupal::entityTypeManager();
+      $limit = 3;
+
+      //comme un foreach
+      $valueTags =$node->get('field_tags')->getValue();
+      $tids = array_map(function($value){
+        return $value['target_id'];
+      },$valueTags);
+
+      dpm($tids);// retourne id du tags
+
+
+  //    //
+  //    $node = \Drupal::routeMatch()->getParameter('node');
+  //    $nid = $node->id();
+  //    dpm($nid);// id du node  sur lequelle on est .
+  //
+
+
+      $otherNode = Drupal::entityTypeManager()->getStorage('node');//recuperation du storage de node => storage c est une classe qui permet d interagir avc les nodes
+      $query = $otherNode->getQuery();
+
+      $query
+        ->condition('type', 'blog_post')
+        ->condition('status', TRUE)
+        ->exists('field_tags')
+        ->condition('field_tags' , $tids,'IN')// si yen a 1 en commun  entre le node et celui de la query
+        ->condition( 'nid',$node->id() ,'<>')
+        ->sort('created', 'DESC')//trie par dernier ajouté
+        ->range(0, $limit);
+
+      $nids = $query->execute();
+  //    dpm("bouh");
+
+      if (!empty($nids)) {
+        $nodeObjects = $otherNode->loadMultiple($nids);
+        $nodeViewBuilder = $entityTypeManager->getViewBuilder('node');
+        $view_mode = 'teaser';
+
+        $nodes = [];
+        $nodes = $nodeViewBuilder->viewMultiple($nodeObjects, $view_mode);
+        $variables['nodes_related'] =$nodes;
+
+    }
+
+  }
+
+
+    if ($node->bundle() == 'home' && $variables['view_mode']  == "full") {
+        $promotedBlogPost = [];
+
+        $entityTypeManager = Drupal::entityTypeManager();
+        $node =  $entityTypeManager->getStorage('node');
+        $query = $node->getQuery();
+
+        $query
+            ->condition('type', 'blog_post')
+            ->condition('status', TRUE)
+            ->condition('promote', TRUE)
+            ->range(0,3);
+        $nids = $query->execute();
+
+
+        $missingCOunt = 3 -count($nids);
+
+        if($missingCOunt >0)
+        {
+          $query
+            ->condition('type', 'blog_post')
+            ->condition('status', TRUE)
+            ->condition('promote', FALSE)
+            ->range(0,3);
+          $nidsBonus = $query->execute();
+          $nids = array_merge($nids, $nidsBonus);
+        }
+
+
+        if (!empty($nids)) {
+          $nodeObjects = $node->loadMultiple($nids);
+          $nodeViewBuilder = $entityTypeManager->getViewBuilder('node');
+          $view_mode = 'teaser';
+
+
+          $promotedBlogPost = $nodeViewBuilder->viewMultiple($nodeObjects, $view_mode);
+          $variables['promoted_blog_posts'] = $promotedBlogPost;
+        }
+
+    }
+
+
+
+
+    // view mode teaser
+    //on essaye de recuperer la route courante
+    // si la route existe
+    // on  rajoute attributes class
+
+
+//  if($node->bundle() == 'blog_post' && $variables['view_mode'] == "teaser"){
+//    //
+//    $node = $variables['node'];
+//    $path = $variables['url'] = $node->toUrl('canonical', [
+//      'absolute' => TRUE,
+//      'language' => $node->language(),
+//    ])->toString();
+//
+//    dpm($path);
+//
+//    if(isset($path) && strpos($path,'/blog')){
+//      $addClassItems = array_push($variables['attributes'], 'item_list_blog');
+//      dpm("tagada");
+//    }
+//
+//  }
+
+}
+
+function cp_blog_post_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id)
+{
+  /*dpm($form_state->getBuildInfo()['base_form_id']);*/
+//  dpm($form);
+  //recuperation de l'objet du form du node
+  /*
+   * hook appeler a chaque fois sur l edition/modif du node
+   * on essaye de recupere l objet du node pr connaitre son bundle => met une condition
+   */
+  $form_object = $form_state->getFormObject();
+  $node = $form_object->getEntity();
+
+  if ($node instanceof NodeInterface) {
+    $bundle = $node->bundle();
+  #faire en sorte que le statuit de publie soit pas coche par defaut
+    if($bundle == "blog_post"){
+
+      $form['status']['widget']['value']['#default_value'] = FALSE;
+      $form['field_intro']['widget'][0]['value']['#disabled'] = TRUE; // desactive le champs intro => tout le chemin pr mettre une valeur ,#
+  //    dpm($form['status']['widget']['value']['#default_value']);
+    }
+  }
+}
+
+function cp_blog_post_theme($existing, $type, $theme, $path){
+  return [
+    // Name of the theme hook. This is used in the controller to trigger the hook.
+    'cp_blog_post_blog_list' => [
+      'render element' => 'children',
+      // Optionally define variables that will be passed to the Twig template and set default values for them.
+      'variables' => [
+        'nodes' => [],
+        'count' => null,
+
+      ],
+    ],
+  ];
+}

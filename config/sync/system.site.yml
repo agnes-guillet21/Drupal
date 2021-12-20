@@ -1,0 +1,14 @@
+uuid: a81bf8f9-1ad5-43d9-8c58-c41f36e9b8fc
+name: Exercice_drupal
+mail: agnesguillet21@gmail.com
+slogan: 'Mon super Site'
+page:
+  403: ''
+  404: ''
+  front: /node/7
+admin_compact_mode: false
+weight_select_max: 100
+langcode: fr
+default_langcode: fr
+_core:
+  default_config_hash: yTxtFqBHnEWxQswuWvkjE8mKw2t8oKuCL1q8KnfHuGE
